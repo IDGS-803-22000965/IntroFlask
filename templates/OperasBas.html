@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block container %}
+    <h1>Operaciones básicas</h1>
+    <form action="/operasBas" method="get">
+        <label for="n1">Número 1</label>
+        <input type="text" name="n1" placeholder="Número 1"><br>
+        <label for="n2">Número 2</label>
+        <input type="text" name="n2" placeholder="Número 2">
+        <input type="submit" value="Calcular" class="btn btn-primary">
+    </form>
+
+    {% if resultado is not none %}
+        <h4 class="text-center">Resultado: {{ resultado }}</h4>
+    {% endif %}
+{% endblock %}
