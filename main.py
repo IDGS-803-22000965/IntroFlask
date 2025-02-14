@@ -105,6 +105,8 @@ def calcular():
                              tarjeta_cineco=tarjeta_cineco)
     except Exception as e:
         return render_template("cinepolis.html", error=str(e))
+    
+    
 if __name__ == "__main__":
     app.run(debug=True, port=3000)
     
