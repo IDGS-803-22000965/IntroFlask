@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinépolis - Cardiel</title>
+    <style>
+        body {
+            background-color: darkblue;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+        .sections {
+            display: flex;
+            justify-content: space-between;
+        }
+        .entradas, .salidas {
+            border: 1px solid black;
+            padding: 20px;
+            width: 45%;
+        }
+        .acciones {
+            text-align: center;
+            margin-top: 20px;
+        }
+        input[type="text"], 
+        input[type="number"] {
+            width: 100%;
+            margin: 5px 0;
+            padding: 5px;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 15px;
+        }
+        .radio-group {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>Cinépolis Cardiel</h1>
+        </div>
+
+        <form action="/calcular" method="post">
+            <div class="sections">
+                <div class="entradas">
+                    <h2>Entradas</h2>
+                    <div>
+                        <label for="nombre">Nombre:</label><br>
+                        <input type="text" id="nombre" name="nombre" required value="{{ nombre if nombre }}">
+                    </div>
+                    <div>
+                        <label for="compradores">Cantidad Compradores:</label><br>
+                        <input type="number" id="compradores" name="compradores" min="1" required value="{{ compradores if compradores }}">
+                    </div>
+                    <div class="radio-group">
+                        <label>Tarjeta Cineco:</label><br>
+                        <input type="radio" name="tarjeta_cineco" value="true" id="si" {% if tarjeta_cineco %}checked{% endif %}>
+                        <label for="si">Sí</label>
+                        <input type="radio" name="tarjeta_cineco" value="false" id="no" {% if not tarjeta_cineco %}checked{% endif %}>
+                        <label for="no">No</label>
+                    </div>
+                    <div>
+                        <label for="cantidad_boletos">Cantidad De Boletas:</label><br>
+                        <input type="number" id="cantidad_boletos" name="cantidad_boletos" min="1" required value="{{ cantidad_boletos if cantidad_boletos }}">
+                    </div>
+                </div>
+
+                <div class="salidas">
+                    <h2>Salidas</h2>
+                    <div>
+                        <label for="valor_pagar">Valor a Pagar:</label><br>
+                        <input type="text" id="valor_pagar" value="${{ '{:,.2f}'.format(precio_final) if precio_final else '' }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="acciones">
+                <button type="submit">Procesar</button>
+                
+            </div>
+        </form>
+
+        {% if error %}
+        <div class="error" style="color: red; text-align: center; margin-top: 20px;">
+            <strong>Error:</strong> {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
