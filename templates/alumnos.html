@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macro %}
+
+<form action="" method="post" novalidate>
+    {{form.csrf_token}}
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group container">
+            {{macro.campoNuevo(form.matricula, class="form-control")}}
+        </div>
+    </div>
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group container">
+            {{macro.campoNuevo(form.nombre, class="form-control")}}
+            </div>
+        </div>
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group container">
+            {{macro.campoNuevo(form.edad, class="form-control")}}
+        </div>
+    </div>
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group container">
+            {{macro.campoNuevo(form.apellido, class="form-control")}}
+        </div>
+    </div>
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group container">
+            {{macro.campoNuevo(form.email, class="form-control")}}
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Guardar">
+   
+    <h2>Matricula: {{matricula}}</h2>
+    <h2>Nombre: {{nombre}}</h2>
+    <h2>Edad: {{edad}}</h2>
+    <h2>Apellido: {{apellido}}</h2>
+    <h2>Email: {{email}}</h2>
+</form>
+{% endblock %}

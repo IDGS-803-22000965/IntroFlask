@@ -1,12 +1,53 @@
 from flask import Flask, render_template, request
+from flask import g
+from flask import flash
+from forms import RegistroForm
+from flask_wtf.csrf import CSRFProtect
+import forms 
 
 app = Flask(__name__)
+app.secret_key = "Esta es clave secreta"
+csrf=CSRFProtect()
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
+
+@app.before_request
+def before_request():
+    g.nombre = "Diego"
+    print("Before request 1")
+    
+@app.after_request
+def after_request(response):
+    print("After request 3")
+    return response
 
 @app.route("/")
 def index():
     grupo = "IDGS803"
     lista = ["Juan", "Pedro", "Carlos", "Luis", "Marcos"]
+    print("index 2")
+    print("Hello {}".format(g.nombre))
     return render_template("index.html", grupo=grupo, lista=lista)
+
+@app.route("/alumnos", methods=["GET", "POST"])
+def alumnos():
+    matricula=""
+    edad=""
+    nombre=""
+    apellido=""
+    email=""
+    alumno_clase=forms.RegistroForm(request.form)
+    if request.method == "POST" and alumno_clase.validate():
+        matricula=alumno_clase.matricula.data
+        nombre=alumno_clase.nombre.data
+        edad=alumno_clase.edad.data
+        apellido=alumno_clase.apellido.data
+        email=alumno_clase.email.data
+        mensaje="Bienvenido {}".format(nombre)
+        return render_template("alumnos.html", form=alumno_clase, matricula=matricula, nombre=nombre, edad=edad, apellido=apellido, email=email)
+
 
 @app.route("/hola")
 def hola():
@@ -108,5 +149,6 @@ def calcular():
     
     
 if __name__ == "__main__":
+    csrf.init_app(app)
     app.run(debug=True, port=3000)
     
